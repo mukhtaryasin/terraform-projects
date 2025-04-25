@@ -14,8 +14,7 @@ This repository contains Terraform configurations to set up AWS infrastructure, 
 - **`main.tf`**: The main entry point for Terraform configuration.
 - **`variables.tf`**: Defines input variables for the setup.
 - **`outputs.tf`**: Outputs the created resources' details.
-- **`terraform.tfvars`**: Contains values for the input variables.
-- **`.terraform/`**: Auto-generated directory for Terraform state and provider plugins.
+
 
 ### Modules
 
