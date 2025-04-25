@@ -6,3 +6,4 @@
 *.tfvars
 files/user_data.sh
 files/user_script.sh
+files/
