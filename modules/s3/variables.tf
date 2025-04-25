@@ -17,11 +17,9 @@ variable "content_type" {
   default = "text/plain" # The content type of the file.
   description = "The content type of the file"
 }
-
-
-
-variable "environment" {
-  description = "The environment for the S3 bucket"
-  type        = string
-  default = "Dev"
+variable "tags" {
+  description = "A map of tags to assign to the S3 bucket"
+  type        = map(string)
+  default = {}
 }
+

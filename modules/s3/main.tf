@@ -1,8 +1,6 @@
 resource "aws_s3_bucket" "this" {
   bucket = var.bucket_name # The name of the bucket. Must be unique across all existing bucket names in Amazon S3.
-  tags = {
-    environment = var.environment # Add your tags here
-  }
+  tags = var.tags
 }
 
 resource "aws_s3_bucket_versioning" "this" {
@@ -13,11 +11,29 @@ resource "aws_s3_bucket_versioning" "this" {
   }
 }
 
-resource "aws_s3_object" "upload-file" {
-  bucket = aws_s3_bucket.this.id # The name of the bucket to upload the file to.
-  key    = var.object_key # The name of the file in S3.
-  source = var.file_path # The path to the file on your local machine.
-  # Optional: Set the content type of the file
-  content_type = var.content_type
-  
+resource "aws_s3_bucket_acl" "public_access" {
+  bucket = aws_s3_bucket.this.id
+  acl    = "private"
+}
+
+
+resource "aws_s3_bucket_policy" "this" {
+  bucket = aws_s3_bucket.this.id
+
+  policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::${aws_s3_bucket.this.id}",
+                "arn:aws:s3:::${aws_s3_bucket.this.id}/*"
+            ]
+        }
+    ]
+}
+POLICY
 }
